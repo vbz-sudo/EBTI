@@ -387,3 +387,8 @@ footer .highlight {
     grid-template-columns: 1fr;
   }
 }
+body {
+  transition: transform 0.4s ease, font-size 0.3s ease;
+}
+
+
