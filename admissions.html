@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admissions | Ebenezer Bible Training Institute</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav-wrap">
+      <div class="logo">
+        <img src="logo.png" alt="Ebenezer Logo" />
+        <span>Ebenezer Bible Training Institute</span>
+      </div>
+      <nav>
+        <button class="menu-toggle" aria-label="Toggle Menu">☰</button>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li class="dropdown">
+            <a href="academics.html">Academics ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="academics.html#programs">Programs</a></li>
+              <li><a href="academics.html#faculty">Faculty</a></li>
+              <li><a href="academics.html#calendar">Academic Calendar</a></li>
+            </ul>
+          </li>
+          <li><a href="admissions.html" class="active">Admissions</a></li>
+          <li><a href="news.html">News & Events</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Floating orbs -->
+  <div class="orb orb--one"></div>
+  <div class="orb orb--two"></div>
+
+  <!-- Hero -->
+  <section class="hero hero-small reveal">
+    <div class="container hero-content">
+      <h1>Admissions</h1>
+      <p>Join a Christ-centered community committed to biblical excellence and spiritual growth.</p>
+    </div>
+  </section>
+
+  <!-- Admission Requirements -->
+  <section class="admissions-info reveal">
+    <div class="container">
+      <h2>Admission Requirements</h2>
+      <ul class="requirements">
+        <li>Completed application form</li>
+        <li>Certified copies of academic transcripts</li>
+        <li>Recommendation letter from a pastor or church leader</li>
+        <li>Two recent passport-size photos</li>
+        <li>Proof of payment for application fee</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- How to Apply -->
+  <section class="how-to-apply reveal">
+    <div class="container">
+      <h2>How to Apply</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>1. Prepare Documents</h3>
+          <p>Gather all the required documents listed above before applying.</p>
+        </div>
+        <div class="step">
+          <h3>2. Fill Out the Form</h3>
+          <p>Use our online application form below or visit our campus for assistance.</p>
+        </div>
+        <div class="step">
+          <h3>3. Submit and Wait for Response</h3>
+          <p>After submission, our admissions team will contact you within 7 working days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Application Form -->
+  <section class="application-form reveal">
+    <div class="container">
+      <h2>Online Application Form</h2>
+      <form action="send_mail.php" method="POST" class="form">
+        <input type="hidden" name="form_type" value="application" />
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <input type="text" id="fullname" name="fullname" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="program">Program of Interest</label>
+          <select id="program" name="program" required>
+            <option value="">-- Select Program --</option>
+            <option value="Diploma in Theology">Diploma in Theology</option>
+            <option value="Certificate in Biblical Studies">Certificate in Biblical Studies</option>
+            <option value="Leadership and Ministry">Leadership and Ministry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Brief Personal Statement</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell us about your faith journey and calling..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid">Submit Application</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2025 Ebenezer Bible Training Institute. All Rights Reserved.</p>
+      <p>Developed by <span class="highlight">VibeShift Agency</span></p>
+    </div>
+  </footer>
+</body>
+</html>
