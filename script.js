@@ -75,3 +75,54 @@ function adjustLayoutForScreen() {
 window.addEventListener("load", adjustLayoutForScreen);
 // Recalculate on resize
 window.addEventListener("resize", adjustLayoutForScreen);
+// ==============================
+// Screen Resolution Detection & Mobile Fit
+// ==============================
+function adjustLayoutForScreen() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const body = document.body;
+  const navLinks = document.querySelector('.nav-links');
+
+  console.log(`Detected resolution: ${width}x${height}`);
+
+  // Reset any previous scaling or styles
+  body.style.transform = "scale(1)";
+  body.style.transformOrigin = "top center";
+
+  // Mobile phone view adjustments
+  if (width <= 480) {
+    // Compact layout for small phones
+    body.style.transform = "scale(0.9)";
+    body.style.padding = "0";
+    document.documentElement.style.fontSize = "14px";
+
+    // Ensure mobile nav menu behaves correctly
+    if (navLinks) {
+      navLinks.style.flexDirection = "column";
+      navLinks.style.width = "100%";
+      navLinks.style.background = "var(--sky-green)";
+    }
+
+  } else if (width > 480 && width <= 768) {
+    // Slightly larger phones or tablets
+    body.style.transform = "scale(0.95)";
+    document.documentElement.style.fontSize = "15px";
+
+  } else if (width > 1600) {
+    // Large desktop or wide screen monitors
+    body.style.transform = "scale(1.1)";
+    document.documentElement.style.fontSize = "18px";
+
+  } else {
+    // Normal desktop view
+    body.style.transform = "scale(1)";
+    document.documentElement.style.fontSize = "16px";
+  }
+}
+
+// Trigger on load and resize
+window.addEventListener("load", adjustLayoutForScreen);
+window.addEventListener("resize", adjustLayoutForScreen);
+
+
