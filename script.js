@@ -41,3 +41,37 @@ function revealOnScroll() {
 
 window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
+// ==============================
+// Screen Resolution Detection & Auto Fit
+// ==============================
+function adjustLayoutForScreen() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const body = document.body;
+
+  console.log(`Detected resolution: ${width}x${height}`);
+
+  // Reset scaling before applying new one
+  body.style.transform = "scale(1)";
+  body.style.transformOrigin = "top center";
+
+  // Apply scaling or layout adjustments
+  if (width < 400) {
+    // Very small screens (small phones)
+    body.style.transform = "scale(0.9)";
+  } else if (width >= 400 && width < 600) {
+    // Small to medium devices
+    body.style.transform = "scale(0.95)";
+  } else if (width > 1600) {
+    // Large monitors
+    body.style.transform = "scale(1.1)";
+  } else {
+    // Normal scaling for most screens
+    body.style.transform = "scale(1)";
+  }
+}
+
+// Initial detection on load
+window.addEventListener("load", adjustLayoutForScreen);
+// Recalculate on resize
+window.addEventListener("resize", adjustLayoutForScreen);
