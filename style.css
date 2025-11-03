@@ -1,6 +1,6 @@
-/* ==============================
-   Reset & Base
-============================== */
+/* ==================================== */
+/* 1. Theme Variables & Base Enhancements */
+/* ==================================== */
 * {
   margin: 0;
   padding: 0;
@@ -391,4 +391,277 @@ body {
   transition: transform 0.4s ease, font-size 0.3s ease;
 }
 
+:root {
+    /* Primary Color Palette (Adjust to institute branding) */
+    --color-primary: #eeff00; /* A clean blue */
+    --color-primary-dark: #fbff00;
+    
+    /* Light Mode Theme */
+    --color-bg-light: #f8f9fa; /* Off-white for background */
+    --color-text-light: #343a40; /* Dark gray for text */
+    --color-card-light: #ffffff; /* White for cards/containers */
+    --color-border-light: #e0e0e0;
 
+    /* Applied Colors */
+    --color-bg: var(--color-bg-light);
+    --color-text: var(--color-text-light);
+    --color-card: var(--color-card-light);
+    --color-border: var(--color-border-light);
+    --color-nav-bg: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    --color-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Global Transitions for smooth interaction */
+* {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    /* Optional: Subtle, slow gradient background layer */
+    /* background: linear-gradient(135deg, #f0f0f5 0%, #fcfcfc 100%); */
+    min-height: 100vh;
+}
+/* ==================================== */
+/* 2. Header & Navigation Enhancements  */
+/* ==================================== */
+
+header {
+    position: fixed; /* Changed from static/relative to fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it stays above other content */
+    background-color: var(--color-nav-bg);
+    box-shadow: none; /* Start with no shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(5px); /* Modern blur effect for glassmorphism */
+}
+
+/* Class added by JavaScript when scrolling */
+header.scrolled {
+    background-color: var(--color-card); /* Solid color on scroll */
+    box-shadow: 0 2px 10px var(--color-shadow);
+}
+
+/* Navigation Links Transition */
+.nav-links a, .nav-links button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    background-color: var(--color-primary);
+    color: white !important;
+}
+
+/* Dropdown Menu Transition (make it a smooth fade-in) */
+.dropdown-menu {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none; /* Disable interaction until visible */
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown-menu.show { /* For mobile toggle via JS */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+/* ==================================== */
+/* 3. Advanced Transitions (Buttons/Cards)*/
+/* ==================================== */
+
+/* Buttons */
+.btn-solid {
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-solid:hover {
+    background-color: var(--color-primary-dark);
+    /* Subtle 3D lift on hover */
+    transform: translateY(-2px);
+    /* Soft glow effect */
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4); 
+}
+
+.btn-outline {
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-card); /* White in light mode, text color in dark mode */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cards (Quick Links, Faculty, News) */
+.card, .news-card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card:hover, .news-card:hover {
+    /* More pronounced 3D lift */
+    transform: translateY(-8px);
+    /* Enhanced, softer shadow */
+    box-shadow: 0 20px 40px var(--color-shadow);
+}
+/* ==================================== */
+/* 4. Advanced Scroll-Reveal Motion     */
+/* ==================================== */
+
+/* Initial state (hidden) */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px); /* Starts lower */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    /* transition-delay is handled by JavaScript for staggering */
+}
+
+/* Active state (visible, added by JS) */
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Optional: Staggering for grid elements (if not using JS delay) */
+.grid > .reveal {
+    /* If you prefer to control delay purely in CSS */
+    /* &:nth-child(1) { transition-delay: 0s; } */
+    /* &:nth-child(2) { transition-delay: 0.1s; } */
+    /* ... better handled by the new JavaScript */
+}
+/* ==================================== */
+/* 5. Dark Mode Feature                 */
+/* ==================================== */
+
+/* Dark Mode Variables */
+.dark-mode {
+    /* Dark Mode Palette */
+    --color-bg: #121212; /* Deep background */
+    --color-text: #e0e0e0; /* Light text */
+    --color-card: #1e1e1e; /* Slightly lighter dark card */
+    --color-border: #333333;
+    --color-nav-bg: rgba(18, 18, 18, 0.9);
+    --color-shadow: rgba(255, 255, 255, 0.05);
+
+    /* Text Colors in Dark Mode */
+    color: var(--color-text);
+}
+
+/* Dark Mode specific element adjustments */
+.dark-mode h1, .dark-mode h2, .dark-mode h3 {
+    color: #ffffff; /* Ensure headings are bright white */
+}
+
+.dark-mode a {
+    color: var(--color-primary);
+}
+
+/* Override card/nav background in dark mode */
+.dark-mode .card, .dark-mode .news-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Stronger dark shadow */
+}
+
+/* Ensure buttons look good in dark mode */
+.dark-mode .btn-outline {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.dark-mode .btn-outline:hover {
+    color: var(--color-card); /* The white color in dark mode */
+}
+
+/* Dark Mode Toggle Button Styling */
+#darkModeToggle {
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 8px 12px;
+    margin-left: 15px;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.9rem;
+}
+
+.dark-mode #darkModeToggle {
+    border-color: #555555;
+}
+
+#darkModeToggle:hover {
+    background-color: var(--color-border);
+}
+
+/* Footer in Dark Mode */
+.dark-mode footer {
+    border-top: 1px solid #333;
+}
+/* ==================================== */
+/* 6. Hero Section (Parallax & Gradient)*/
+/* ==================================== */
+
+.hero {
+    /* Assuming your hero has a background image set */
+    background-image: url('Background.jpg'), linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)); 
+    background-blend-mode: overlay; /* Mix the image and the gradient/color */
+    background-size: cover;
+    background-position: center;
+    min-height: 80vh; 
+    color: white; /* Ensure text is readable on the dark background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    /* Parallax Effect (requires JavaScript handleScroll to refine) */
+    background-attachment: fixed; 
+}
+
+/* Ensure other sections don't have unnecessary background-attachment */
+section {
+    background-attachment: scroll; 
+}
+/* ==================================== */
+/* 7. Back-to-Top Button                */
+/* ==================================== */
+
+#backToTopBtn {
+    /* Styling for the button created by script.js */
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s, transform 0.3s;
+}
+
+#backToTopBtn:hover {
+    background-color: var(--color-primary-dark);
+    transform: scale(1.1);
+}
+
+.dark-mode #backToTopBtn {
+    background-color: var(--color-primary);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
