@@ -1,128 +1,125 @@
-// ==============================
-// Mobile Menu Toggle
-// ==============================
-const menuToggle = document.querySelector('.menu-toggle');
-const navLinks = document.querySelector('.nav-links');
+// =======================================================
+// Enhanced script.js for Ebenezer Bible Training Institute
+// =======================================================
 
-menuToggle.addEventListener('click', () => {
-  navLinks.classList.toggle('show');
+document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. Mobile Menu Toggle & Dropdown Functionality
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const dropdowns = document.querySelectorAll('.dropdown');
+    const header = document.querySelector('header');
+    
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+        menuToggle.setAttribute('aria-expanded', navLinks.classList.contains('show'));
+    });
+
+    // Handle dropdowns for mobile (click to expand)
+    dropdowns.forEach(dropdown => {
+        dropdown.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) { // Increased breakpoint for tablet support
+                // Prevent navigation if the link itself is clicked on mobile
+                if (e.target.tagName.toLowerCase() === 'a' && e.target.closest('.dropdown')) {
+                    e.preventDefault();
+                }
+                dropdown.querySelector('.dropdown-menu').classList.toggle('show');
+            }
+        });
+    });
+
+
+    // 2. Sticky Header & Back-to-Top Button Logic
+    const backToTopButton = createBackToTopButton();
+    const scrollThreshold = 100;
+
+    function handleScroll() {
+        const isScrolled = window.scrollY > scrollThreshold;
+
+        // Sticky Header: Add a class for styling changes (e.g., background color)
+        header.classList.toggle('scrolled', isScrolled);
+
+        // Back-to-Top: Show/hide button
+        backToTopButton.style.display = isScrolled ? 'block' : 'none';
+
+        // Optional: Call reveal on scroll for maximum compatibility
+        revealOnScroll();
+        
+        // Parallax Effect - only if needed for hero background
+        // document.querySelector('.hero').style.backgroundPositionY = -window.scrollY * 0.2 + 'px';
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('load', handleScroll); // Run on load for initial state
+
+    // 3. Advanced Scroll-Reveal Effect
+    const revealElements = document.querySelectorAll('.reveal');
+
+    function revealOnScroll() {
+        const windowHeight = window.innerHeight;
+        revealElements.forEach((el, index) => {
+            const elementTop = el.getBoundingClientRect().top;
+            
+            // Trigger animation when 80% of the element is visible
+            if (elementTop < windowHeight * 0.8) {
+                // Add a slight delay for a staggered effect
+                el.style.transitionDelay = `${index * 0.1}s`; 
+                el.classList.add('active');
+            } else {
+                // Optional: Remove active class for repeating animation (better to keep it simple)
+                // el.classList.remove('active');
+                el.style.transitionDelay = '0s';
+            }
+        });
+    }
+
+    // 4. Dark Mode Toggle Feature (Requires CSS classes: .dark-mode, .dark-button)
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+            darkModeToggle.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // Check for saved user preference on load
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.textContent = '☀️ Light Mode';
+        } else {
+            darkModeToggle.textContent = '🌙 Dark Mode';
+        }
+    }
+    
+    // 5. Back to Top Button Creation
+    function createBackToTopButton() {
+        const btn = document.createElement('button');
+        btn.id = 'backToTopBtn';
+        btn.textContent = '↑';
+        btn.style.cssText = `
+            display: none; 
+            position: fixed; 
+            bottom: 20px; 
+            right: 30px; 
+            z-index: 99; 
+            border: none; 
+            outline: none; 
+            background-color: var(--color-primary, #007bff); 
+            color: white; 
+            cursor: pointer; 
+            padding: 15px 20px; 
+            border-radius: 50%; 
+            font-size: 18px;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        `;
+        document.body.appendChild(btn);
+
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        return btn;
+    }
 });
-
-// ==============================
-// Dropdown Menu Toggle (Mobile)
-// ==============================
-const dropdowns = document.querySelectorAll('.dropdown');
-
-dropdowns.forEach(dropdown => {
-  dropdown.addEventListener('click', (e) => {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      dropdown.querySelector('.dropdown-menu').classList.toggle('show');
-    }
-  });
-});
-
-// ==============================
-// Reveal on Scroll
-// ==============================
-const revealElements = document.querySelectorAll('.reveal');
-
-function revealOnScroll() {
-  const windowHeight = window.innerHeight;
-  revealElements.forEach(el => {
-    const elementTop = el.getBoundingClientRect().top;
-    if (elementTop < windowHeight - 50) {
-      el.classList.add('active');
-    } else {
-      el.classList.remove('active');
-    }
-  });
-}
-
-window.addEventListener('scroll', revealOnScroll);
-window.addEventListener('load', revealOnScroll);
-// ==============================
-// Screen Resolution Detection & Auto Fit
-// ==============================
-function adjustLayoutForScreen() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  const body = document.body;
-
-  console.log(`Detected resolution: ${width}x${height}`);
-
-  // Reset scaling before applying new one
-  body.style.transform = "scale(1)";
-  body.style.transformOrigin = "top center";
-
-  // Apply scaling or layout adjustments
-  if (width < 400) {
-    // Very small screens (small phones)
-    body.style.transform = "scale(0.9)";
-  } else if (width >= 400 && width < 600) {
-    // Small to medium devices
-    body.style.transform = "scale(0.95)";
-  } else if (width > 1600) {
-    // Large monitors
-    body.style.transform = "scale(1.1)";
-  } else {
-    // Normal scaling for most screens
-    body.style.transform = "scale(1)";
-  }
-}
-
-// Initial detection on load
-window.addEventListener("load", adjustLayoutForScreen);
-// Recalculate on resize
-window.addEventListener("resize", adjustLayoutForScreen);
-// ==============================
-// Screen Resolution Detection & Mobile Fit
-// ==============================
-function adjustLayoutForScreen() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  const body = document.body;
-  const navLinks = document.querySelector('.nav-links');
-
-  console.log(`Detected resolution: ${width}x${height}`);
-
-  // Reset any previous scaling or styles
-  body.style.transform = "scale(1)";
-  body.style.transformOrigin = "top center";
-
-  // Mobile phone view adjustments
-  if (width <= 480) {
-    // Compact layout for small phones
-    body.style.transform = "scale(0.9)";
-    body.style.padding = "0";
-    document.documentElement.style.fontSize = "14px";
-
-    // Ensure mobile nav menu behaves correctly
-    if (navLinks) {
-      navLinks.style.flexDirection = "column";
-      navLinks.style.width = "100%";
-      navLinks.style.background = "var(--sky-green)";
-    }
-
-  } else if (width > 480 && width <= 768) {
-    // Slightly larger phones or tablets
-    body.style.transform = "scale(0.95)";
-    document.documentElement.style.fontSize = "15px";
-
-  } else if (width > 1600) {
-    // Large desktop or wide screen monitors
-    body.style.transform = "scale(1.1)";
-    document.documentElement.style.fontSize = "18px";
-
-  } else {
-    // Normal desktop view
-    body.style.transform = "scale(1)";
-    document.documentElement.style.fontSize = "16px";
-  }
-}
-
-// Trigger on load and resize
-window.addEventListener("load", adjustLayoutForScreen);
-window.addEventListener("resize", adjustLayoutForScreen);
-
 
